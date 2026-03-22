@@ -1,0 +1,1488 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Scents by Biba — Luxury Fragrance, Redefined</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+/* ===== CSS VARIABLES ===== */
+:root {
+  --black: #0A0A0A;
+  --deep: #111111;
+  --dark: #1A1A1A;
+  --card: #141414;
+  --gold: #C9A96E;
+  --gold-light: #D4B97E;
+  --cream: #F5F0EB;
+  --champagne: #E8DDD3;
+  --muted: #8A8A8A;
+  --white: #FFFFFF;
+  --font-display: 'Playfair Display', Georgia, serif;
+  --font-body: 'Jost', sans-serif;
+}
+
+/* ===== RESET ===== */
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; scroll-padding-top: 80px; }
+body {
+  font-family: var(--font-body);
+  background: var(--black);
+  color: var(--cream);
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+a { text-decoration: none; color: inherit; }
+ul { list-style: none; }
+img { max-width: 100%; display: block; }
+
+/* ===== SCROLLBAR ===== */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: var(--black); }
+::-webkit-scrollbar-thumb { background: var(--gold); border-radius: 3px; }
+
+/* ===== ANIMATIONS ===== */
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(40px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+@keyframes shimmer {
+  0% { background-position: -200% center; }
+  100% { background-position: 200% center; }
+}
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+}
+@keyframes goldPulse {
+  0%, 100% { opacity: 0.4; }
+  50% { opacity: 1; }
+}
+@keyframes slideDown {
+  from { opacity: 0; transform: translateY(-10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes expandLine {
+  from { width: 0; }
+  to { width: 60px; }
+}
+
+.animate-on-scroll {
+  opacity: 0;
+  transform: translateY(40px);
+  transition: opacity 0.8s ease, transform 0.8s ease;
+}
+.animate-on-scroll.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ===== NAVIGATION ===== */
+.nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 1000;
+  padding: 20px 40px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  transition: all 0.4s ease;
+  background: transparent;
+}
+.nav.scrolled {
+  background: rgba(10, 10, 10, 0.95);
+  backdrop-filter: blur(20px);
+  padding: 14px 40px;
+  border-bottom: 1px solid rgba(201, 169, 110, 0.15);
+}
+.nav-logo {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.nav-logo img {
+  height: 42px;
+  width: auto;
+}
+.nav-logo-text {
+  font-family: var(--font-display);
+  font-size: 1.2rem;
+  font-weight: 500;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--cream);
+}
+.nav-logo-text span {
+  color: var(--gold);
+}
+.nav-links {
+  display: flex;
+  gap: 36px;
+  align-items: center;
+}
+.nav-links a {
+  font-family: var(--font-body);
+  font-size: 0.82rem;
+  font-weight: 400;
+  letter-spacing: 2.5px;
+  text-transform: uppercase;
+  color: var(--champagne);
+  position: relative;
+  transition: color 0.3s ease;
+}
+.nav-links a::after {
+  content: '';
+  position: absolute;
+  bottom: -4px;
+  left: 0;
+  width: 0;
+  height: 1px;
+  background: var(--gold);
+  transition: width 0.3s ease;
+}
+.nav-links a:hover { color: var(--gold); }
+.nav-links a:hover::after { width: 100%; }
+
+.nav-right {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+.nav-ig {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.78rem;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--muted);
+  transition: color 0.3s;
+}
+.nav-ig:hover { color: var(--gold); }
+.nav-ig svg { width: 18px; height: 18px; }
+
+.btn-shop {
+  font-family: var(--font-body);
+  font-size: 0.78rem;
+  font-weight: 500;
+  letter-spacing: 2.5px;
+  text-transform: uppercase;
+  padding: 10px 28px;
+  border: 1px solid var(--gold);
+  color: var(--gold);
+  background: transparent;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+.btn-shop:hover {
+  background: var(--gold);
+  color: var(--black);
+}
+
+/* Mobile menu */
+.nav-hamburger {
+  display: none;
+  flex-direction: column;
+  gap: 5px;
+  cursor: pointer;
+  z-index: 1001;
+}
+.nav-hamburger span {
+  display: block;
+  width: 24px;
+  height: 1.5px;
+  background: var(--cream);
+  transition: all 0.3s ease;
+}
+.nav-hamburger.active span:nth-child(1) { transform: rotate(45deg) translate(5px, 4px); }
+.nav-hamburger.active span:nth-child(2) { opacity: 0; }
+.nav-hamburger.active span:nth-child(3) { transform: rotate(-45deg) translate(5px, -4px); }
+
+.mobile-menu {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  background: rgba(10, 10, 10, 0.98);
+  backdrop-filter: blur(30px);
+  z-index: 999;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 32px;
+}
+.mobile-menu.active { display: flex; }
+.mobile-menu a {
+  font-family: var(--font-display);
+  font-size: 1.8rem;
+  color: var(--cream);
+  letter-spacing: 3px;
+  transition: color 0.3s;
+}
+.mobile-menu a:hover { color: var(--gold); }
+
+/* ===== HERO ===== */
+.hero {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+  padding: 0 20px;
+}
+.hero-bg {
+  position: absolute;
+  inset: 0;
+  background: 
+    radial-gradient(ellipse at 30% 20%, rgba(201, 169, 110, 0.06) 0%, transparent 60%),
+    radial-gradient(ellipse at 70% 80%, rgba(201, 169, 110, 0.04) 0%, transparent 60%),
+    var(--black);
+}
+.hero-grain {
+  position: absolute;
+  inset: 0;
+  opacity: 0.03;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+  background-size: 128px 128px;
+}
+.hero-content {
+  position: relative;
+  z-index: 2;
+  animation: fadeIn 1.5s ease;
+}
+.hero-logo-icon {
+  width: 80px;
+  height: auto;
+  margin: 0 auto 32px;
+  opacity: 0;
+  animation: fadeInUp 1s ease 0.3s forwards;
+}
+.hero-brand {
+  font-family: var(--font-display);
+  font-size: clamp(2.8rem, 7vw, 5.5rem);
+  font-weight: 400;
+  letter-spacing: 12px;
+  text-transform: uppercase;
+  color: var(--cream);
+  margin-bottom: 8px;
+  opacity: 0;
+  animation: fadeInUp 1s ease 0.5s forwards;
+}
+.hero-brand em {
+  font-style: italic;
+  color: var(--gold);
+}
+.hero-tagline {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: clamp(1rem, 2.5vw, 1.4rem);
+  font-weight: 400;
+  color: var(--gold);
+  letter-spacing: 4px;
+  margin-bottom: 48px;
+  opacity: 0;
+  animation: fadeInUp 1s ease 0.8s forwards;
+}
+.hero-cta {
+  opacity: 0;
+  animation: fadeInUp 1s ease 1.1s forwards;
+}
+.hero-cta a {
+  display: inline-block;
+  font-family: var(--font-body);
+  font-size: 0.82rem;
+  font-weight: 500;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  padding: 16px 48px;
+  border: 1px solid var(--gold);
+  color: var(--gold);
+  transition: all 0.4s ease;
+  position: relative;
+  overflow: hidden;
+}
+.hero-cta a::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: var(--gold);
+  transform: translateX(-100%);
+  transition: transform 0.4s ease;
+  z-index: -1;
+}
+.hero-cta a:hover { color: var(--black); }
+.hero-cta a:hover::before { transform: translateX(0); }
+
+.hero-scroll {
+  position: absolute;
+  bottom: 40px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  animation: float 2.5s ease infinite;
+  opacity: 0;
+  animation: float 2.5s ease infinite, fadeIn 1s ease 1.5s forwards;
+}
+.hero-scroll span {
+  font-size: 0.65rem;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.hero-scroll-line {
+  width: 1px;
+  height: 40px;
+  background: linear-gradient(to bottom, var(--gold), transparent);
+}
+
+/* ===== SECTION COMMON ===== */
+.section {
+  padding: 120px 40px;
+  max-width: 1320px;
+  margin: 0 auto;
+}
+.section-label {
+  font-family: var(--font-body);
+  font-size: 0.72rem;
+  font-weight: 500;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 16px;
+}
+.section-title {
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 4vw, 3.2rem);
+  font-weight: 400;
+  color: var(--cream);
+  margin-bottom: 16px;
+  line-height: 1.2;
+}
+.section-title em {
+  font-style: italic;
+  color: var(--gold);
+}
+.section-line {
+  width: 60px;
+  height: 1px;
+  background: var(--gold);
+  margin-bottom: 40px;
+}
+.section-desc {
+  font-size: 1rem;
+  font-weight: 300;
+  color: var(--muted);
+  line-height: 1.8;
+  max-width: 560px;
+}
+.divider {
+  width: 100%;
+  max-width: 1320px;
+  margin: 0 auto;
+  height: 1px;
+  background: linear-gradient(to right, transparent, rgba(201,169,110,0.2), transparent);
+}
+
+/* ===== COLLECTION ===== */
+.collection-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 24px;
+  margin-top: 60px;
+}
+.product-card {
+  background: var(--card);
+  border: 1px solid rgba(201, 169, 110, 0.08);
+  position: relative;
+  overflow: hidden;
+  transition: all 0.5s ease;
+  cursor: pointer;
+}
+.product-card:hover {
+  border-color: rgba(201, 169, 110, 0.25);
+  transform: translateY(-6px);
+  box-shadow: 0 20px 60px rgba(0,0,0,0.4);
+}
+.product-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(to right, transparent, var(--gold), transparent);
+  opacity: 0;
+  transition: opacity 0.5s ease;
+}
+.product-card:hover::before { opacity: 1; }
+
+.product-image {
+  width: 100%;
+  aspect-ratio: 3/4;
+  background: var(--deep);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+}
+.product-image-inner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  opacity: 0.15;
+  transition: opacity 0.4s ease;
+}
+.product-card:hover .product-image-inner { opacity: 0.25; }
+.product-image-inner svg { width: 60px; height: auto; }
+.product-image-inner span {
+  font-size: 0.65rem;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--cream);
+}
+.product-badge {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  font-size: 0.62rem;
+  font-weight: 500;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  padding: 5px 12px;
+  background: var(--gold);
+  color: var(--black);
+}
+
+.product-info {
+  padding: 24px;
+}
+.product-name {
+  font-family: var(--font-display);
+  font-size: 1.25rem;
+  font-weight: 500;
+  color: var(--cream);
+  margin-bottom: 8px;
+  letter-spacing: 1px;
+}
+.product-notes {
+  font-size: 0.82rem;
+  font-weight: 300;
+  color: var(--muted);
+  margin-bottom: 6px;
+  font-style: italic;
+}
+.product-size {
+  font-size: 0.72rem;
+  font-weight: 400;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: rgba(201, 169, 110, 0.5);
+  margin-bottom: 16px;
+}
+.product-bottom {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: 16px;
+  border-top: 1px solid rgba(255,255,255,0.06);
+}
+.product-price {
+  font-family: var(--font-display);
+  font-size: 1.3rem;
+  font-weight: 600;
+  color: var(--gold);
+}
+.product-btn {
+  font-size: 0.68rem;
+  font-weight: 500;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--cream);
+  background: none;
+  border: 1px solid rgba(255,255,255,0.15);
+  padding: 8px 16px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+.product-btn:hover {
+  border-color: var(--gold);
+  color: var(--gold);
+}
+
+/* ===== ABOUT ===== */
+.about-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 80px;
+  align-items: center;
+  margin-top: 60px;
+}
+.about-visual {
+  aspect-ratio: 4/5;
+  background: var(--deep);
+  border: 1px solid rgba(201, 169, 110, 0.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+}
+.about-visual::before {
+  content: '';
+  position: absolute;
+  inset: 20px;
+  border: 1px solid rgba(201, 169, 110, 0.08);
+}
+.about-visual svg {
+  width: 120px;
+  height: auto;
+  opacity: 0.12;
+}
+.about-text h3 {
+  font-family: var(--font-display);
+  font-size: 1.6rem;
+  font-weight: 400;
+  color: var(--cream);
+  margin-bottom: 24px;
+  line-height: 1.5;
+}
+.about-text h3 em {
+  font-style: italic;
+  color: var(--gold);
+}
+.about-text p {
+  font-size: 0.95rem;
+  font-weight: 300;
+  color: var(--muted);
+  line-height: 1.9;
+  margin-bottom: 20px;
+}
+.about-stats {
+  display: flex;
+  gap: 48px;
+  margin-top: 40px;
+  padding-top: 32px;
+  border-top: 1px solid rgba(255,255,255,0.06);
+}
+.about-stat-num {
+  font-family: var(--font-display);
+  font-size: 2rem;
+  font-weight: 600;
+  color: var(--gold);
+}
+.about-stat-label {
+  font-size: 0.72rem;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-top: 4px;
+}
+
+/* ===== FRAGRANCE GUIDE ===== */
+.guide-wrapper {
+  margin-top: 60px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+.guide-card {
+  background: var(--card);
+  border: 1px solid rgba(201, 169, 110, 0.06);
+  padding: 36px;
+  cursor: pointer;
+  transition: all 0.4s ease;
+  position: relative;
+  overflow: hidden;
+}
+.guide-card:hover {
+  border-color: rgba(201, 169, 110, 0.2);
+  background: rgba(201, 169, 110, 0.03);
+}
+.guide-card-num {
+  font-family: var(--font-display);
+  font-size: 3rem;
+  font-weight: 300;
+  color: rgba(201, 169, 110, 0.12);
+  position: absolute;
+  top: 16px;
+  right: 24px;
+}
+.guide-card-icon {
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 20px;
+  color: var(--gold);
+}
+.guide-card h4 {
+  font-family: var(--font-display);
+  font-size: 1.15rem;
+  font-weight: 500;
+  color: var(--cream);
+  margin-bottom: 12px;
+}
+.guide-card p {
+  font-size: 0.88rem;
+  font-weight: 300;
+  color: var(--muted);
+  line-height: 1.7;
+}
+.guide-card .guide-expand {
+  display: none;
+  margin-top: 16px;
+  padding-top: 16px;
+  border-top: 1px solid rgba(255,255,255,0.06);
+  font-size: 0.85rem;
+  font-weight: 300;
+  color: var(--champagne);
+  line-height: 1.8;
+  animation: slideDown 0.3s ease;
+}
+.guide-card.open .guide-expand { display: block; }
+.guide-card-toggle {
+  margin-top: 12px;
+  font-size: 0.7rem;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--gold);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  transition: gap 0.3s;
+}
+.guide-card:hover .guide-card-toggle { gap: 10px; }
+.guide-card-toggle svg {
+  width: 12px;
+  height: 12px;
+  transition: transform 0.3s;
+}
+.guide-card.open .guide-card-toggle svg { transform: rotate(180deg); }
+
+/* ===== JOURNAL / BLOG ===== */
+.journal-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 24px;
+  margin-top: 60px;
+}
+.journal-card {
+  background: var(--card);
+  border: 1px solid rgba(201, 169, 110, 0.06);
+  overflow: hidden;
+  transition: all 0.4s ease;
+  cursor: pointer;
+}
+.journal-card:hover {
+  border-color: rgba(201, 169, 110, 0.2);
+  transform: translateY(-4px);
+}
+.journal-img {
+  width: 100%;
+  aspect-ratio: 16/10;
+  background: var(--deep);
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.journal-img span {
+  font-size: 0.65rem;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.12);
+}
+.journal-category {
+  position: absolute;
+  bottom: 12px;
+  left: 12px;
+  font-size: 0.6rem;
+  font-weight: 500;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  padding: 4px 10px;
+  background: var(--gold);
+  color: var(--black);
+}
+.journal-body {
+  padding: 28px;
+}
+.journal-date {
+  font-size: 0.7rem;
+  font-weight: 400;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 12px;
+}
+.journal-title {
+  font-family: var(--font-display);
+  font-size: 1.15rem;
+  font-weight: 500;
+  color: var(--cream);
+  margin-bottom: 12px;
+  line-height: 1.4;
+}
+.journal-excerpt {
+  font-size: 0.85rem;
+  font-weight: 300;
+  color: var(--muted);
+  line-height: 1.7;
+  margin-bottom: 20px;
+}
+.journal-link {
+  font-size: 0.7rem;
+  font-weight: 500;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--gold);
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  transition: gap 0.3s;
+}
+.journal-card:hover .journal-link { gap: 10px; }
+
+/* ===== INSTAGRAM ===== */
+.insta-section {
+  padding: 120px 40px;
+  text-align: center;
+}
+.insta-section .section-label,
+.insta-section .section-title,
+.insta-section .section-line {
+  margin-left: auto;
+  margin-right: auto;
+}
+.insta-grid {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 4px;
+  max-width: 1320px;
+  margin: 60px auto 0;
+}
+.insta-cell {
+  aspect-ratio: 1;
+  background: var(--deep);
+  position: relative;
+  overflow: hidden;
+  cursor: pointer;
+}
+.insta-cell::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: rgba(201, 169, 110, 0);
+  transition: background 0.3s ease;
+}
+.insta-cell:hover::after {
+  background: rgba(201, 169, 110, 0.15);
+}
+.insta-cell-inner {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: rgba(255,255,255,0.06);
+  font-size: 0.6rem;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+.insta-follow {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 48px;
+  font-family: var(--font-body);
+  font-size: 0.82rem;
+  font-weight: 500;
+  letter-spacing: 2.5px;
+  text-transform: uppercase;
+  padding: 14px 36px;
+  border: 1px solid var(--gold);
+  color: var(--gold);
+  background: transparent;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+.insta-follow:hover {
+  background: var(--gold);
+  color: var(--black);
+}
+.insta-follow svg { width: 18px; height: 18px; }
+
+/* ===== NEWSLETTER ===== */
+.newsletter {
+  padding: 100px 40px;
+  background: linear-gradient(to bottom, var(--black), rgba(201,169,110,0.04), var(--black));
+}
+.newsletter-inner {
+  max-width: 600px;
+  margin: 0 auto;
+  text-align: center;
+}
+.newsletter-inner .section-label,
+.newsletter-inner .section-title,
+.newsletter-inner .section-line {
+  margin-left: auto;
+  margin-right: auto;
+}
+.newsletter-inner .section-desc {
+  margin: 0 auto 36px;
+  text-align: center;
+}
+.newsletter-form {
+  display: flex;
+  gap: 0;
+  max-width: 480px;
+  margin: 0 auto;
+}
+.newsletter-input {
+  flex: 1;
+  padding: 14px 20px;
+  background: var(--deep);
+  border: 1px solid rgba(201, 169, 110, 0.15);
+  border-right: none;
+  color: var(--cream);
+  font-family: var(--font-body);
+  font-size: 0.85rem;
+  font-weight: 300;
+  letter-spacing: 0.5px;
+  outline: none;
+  transition: border-color 0.3s;
+}
+.newsletter-input::placeholder { color: var(--muted); }
+.newsletter-input:focus { border-color: var(--gold); }
+.newsletter-submit {
+  padding: 14px 28px;
+  background: var(--gold);
+  border: 1px solid var(--gold);
+  color: var(--black);
+  font-family: var(--font-body);
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 2.5px;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all 0.3s;
+  white-space: nowrap;
+}
+.newsletter-submit:hover {
+  background: var(--gold-light);
+}
+
+/* ===== FOOTER ===== */
+.footer {
+  padding: 80px 40px 40px;
+  border-top: 1px solid rgba(201, 169, 110, 0.1);
+}
+.footer-inner {
+  max-width: 1320px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr 1fr;
+  gap: 60px;
+}
+.footer-brand-text {
+  font-family: var(--font-display);
+  font-size: 1.3rem;
+  font-weight: 500;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--cream);
+  margin-bottom: 16px;
+}
+.footer-brand-text span { color: var(--gold); }
+.footer-brand-desc {
+  font-size: 0.88rem;
+  font-weight: 300;
+  color: var(--muted);
+  line-height: 1.8;
+  max-width: 320px;
+}
+.footer-col h5 {
+  font-family: var(--font-body);
+  font-size: 0.72rem;
+  font-weight: 500;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 24px;
+}
+.footer-col a {
+  display: block;
+  font-size: 0.88rem;
+  font-weight: 300;
+  color: var(--muted);
+  margin-bottom: 14px;
+  transition: color 0.3s;
+}
+.footer-col a:hover { color: var(--cream); }
+.footer-bottom {
+  max-width: 1320px;
+  margin: 60px auto 0;
+  padding-top: 30px;
+  border-top: 1px solid rgba(255,255,255,0.05);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.footer-copy {
+  font-size: 0.75rem;
+  font-weight: 300;
+  color: var(--muted);
+  letter-spacing: 1px;
+}
+.footer-socials {
+  display: flex;
+  gap: 16px;
+}
+.footer-socials a {
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid rgba(255,255,255,0.1);
+  color: var(--muted);
+  transition: all 0.3s;
+}
+.footer-socials a:hover {
+  border-color: var(--gold);
+  color: var(--gold);
+}
+.footer-socials a svg { width: 16px; height: 16px; }
+
+/* ===== WHATSAPP FLOAT ===== */
+.whatsapp-float {
+  position: fixed;
+  bottom: 28px;
+  right: 28px;
+  z-index: 999;
+  width: 56px;
+  height: 56px;
+  background: #25D366;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 20px rgba(37, 211, 102, 0.3);
+  cursor: pointer;
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+.whatsapp-float:hover {
+  transform: scale(1.08);
+  box-shadow: 0 6px 28px rgba(37, 211, 102, 0.45);
+}
+.whatsapp-float svg { width: 28px; height: 28px; fill: white; }
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 1024px) {
+  .collection-grid { grid-template-columns: repeat(2, 1fr); }
+  .journal-grid { grid-template-columns: 1fr 1fr; }
+  .footer-inner { grid-template-columns: 1fr 1fr; gap: 40px; }
+  .insta-grid { grid-template-columns: repeat(3, 1fr); }
+}
+@media (max-width: 768px) {
+  .nav-links, .nav-right .btn-shop { display: none; }
+  .nav-hamburger { display: flex; }
+  .nav { padding: 16px 20px; }
+  .section { padding: 80px 20px; }
+  .hero-brand { letter-spacing: 6px; }
+  .collection-grid { grid-template-columns: 1fr; max-width: 400px; margin-left: auto; margin-right: auto; }
+  .about-grid { grid-template-columns: 1fr; gap: 40px; }
+  .guide-wrapper { grid-template-columns: 1fr; }
+  .journal-grid { grid-template-columns: 1fr; max-width: 480px; margin-left: auto; margin-right: auto; }
+  .insta-grid { grid-template-columns: repeat(3, 1fr); }
+  .insta-section { padding: 80px 20px; }
+  .newsletter { padding: 80px 20px; }
+  .newsletter-form { flex-direction: column; }
+  .newsletter-input { border-right: 1px solid rgba(201, 169, 110, 0.15); }
+  .footer { padding: 60px 20px 30px; }
+  .footer-inner { grid-template-columns: 1fr; gap: 36px; }
+  .footer-bottom { flex-direction: column; gap: 16px; text-align: center; }
+  .about-stats { gap: 32px; }
+}
+@media (max-width: 480px) {
+  .nav-logo-text { font-size: 0.95rem; letter-spacing: 1px; }
+  .hero-cta a { padding: 14px 32px; }
+  .about-stats { flex-direction: column; gap: 20px; }
+  .insta-grid { grid-template-columns: repeat(2, 1fr); }
+}
+</style>
+</head>
+<body>
+
+<!-- ===== NAVIGATION ===== -->
+<nav class="nav" id="nav">
+  <div class="nav-logo">
+    <div class="nav-logo-text">Scents <span>by Biba</span></div>
+  </div>
+  <div class="nav-links">
+    <a href="#collection">Collection</a>
+    <a href="#about">About</a>
+    <a href="#guide">Fragrance Guide</a>
+    <a href="#journal">Journal</a>
+    <a href="#connect">Connect</a>
+  </div>
+  <div class="nav-right">
+    <a href="https://instagram.com/scentsbybiba_" target="_blank" class="nav-ig">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="5"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>
+    </a>
+    <a href="#collection" class="btn-shop">Shop Now</a>
+    <div class="nav-hamburger" id="hamburger" onclick="toggleMenu()">
+      <span></span><span></span><span></span>
+    </div>
+  </div>
+</nav>
+
+<!-- Mobile Menu -->
+<div class="mobile-menu" id="mobileMenu">
+  <a href="#collection" onclick="toggleMenu()">Collection</a>
+  <a href="#about" onclick="toggleMenu()">About</a>
+  <a href="#guide" onclick="toggleMenu()">Fragrance Guide</a>
+  <a href="#journal" onclick="toggleMenu()">Journal</a>
+  <a href="#connect" onclick="toggleMenu()">Connect</a>
+  <a href="https://instagram.com/scentsbybiba_" target="_blank" onclick="toggleMenu()">Instagram</a>
+</div>
+
+<!-- ===== HERO ===== -->
+<section class="hero" id="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-grain"></div>
+  <div class="hero-content">
+    <!-- Inline SVG logo icon -->
+    <svg class="hero-logo-icon" viewBox="0 0 200 240" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M100 0 C100 0 108 16 108 26 C108 32 104 36 100 36 C96 36 92 32 92 26 C92 16 100 0 100 0Z" fill="#C9A96E" opacity="0.8"/>
+      <path d="M100 36 C100 36 116 44 134 62 C156 84 160 100 160 100 L100 100 Z" fill="#F5F0EB" opacity="0.15"/>
+      <path d="M100 36 C100 36 84 44 66 62 C44 84 40 100 40 100 L100 100 Z" fill="#F5F0EB" opacity="0.15"/>
+      <path d="M100 70 L126 100 L100 130 L74 100 Z" stroke="#C9A96E" stroke-width="1.5" fill="none"/>
+      <path d="M100 80 L118 100 L100 120 L82 100 Z" stroke="#C9A96E" stroke-width="0.8" fill="none" opacity="0.5"/>
+      <path d="M40 100 C40 100 30 130 60 170 C75 190 100 200 100 200" stroke="#F5F0EB" stroke-width="2" fill="none" opacity="0.2"/>
+      <path d="M160 100 C160 100 170 130 140 170 C125 190 100 200 100 200" stroke="#F5F0EB" stroke-width="2" fill="none" opacity="0.2"/>
+      <line x1="88" y1="200" x2="112" y2="200" stroke="#C9A96E" stroke-width="1.5"/>
+      <line x1="84" y1="206" x2="116" y2="206" stroke="#C9A96E" stroke-width="1" opacity="0.5"/>
+    </svg>
+    <h1 class="hero-brand">Scents <em>by Biba</em></h1>
+    <p class="hero-tagline">Luxury, Redefined.</p>
+    <div class="hero-cta">
+      <a href="#collection">Explore the Collection</a>
+    </div>
+  </div>
+  <div class="hero-scroll">
+    <span>Scroll</span>
+    <div class="hero-scroll-line"></div>
+  </div>
+</section>
+
+<!-- ===== COLLECTION ===== -->
+<div class="divider"></div>
+<section class="section" id="collection">
+  <div class="animate-on-scroll">
+    <p class="section-label">The Collection</p>
+    <h2 class="section-title">Signature <em>Fragrances</em></h2>
+    <div class="section-line"></div>
+    <p class="section-desc">Each scent is a story — meticulously crafted with the world's finest ingredients. Discover the fragrance that speaks to your soul.</p>
+  </div>
+  <div class="collection-grid">
+    <!-- Card 1 -->
+    <div class="product-card animate-on-scroll">
+      <div class="product-image">
+        <div class="product-image-inner">
+          <svg viewBox="0 0 60 90" fill="none" stroke="currentColor" stroke-width="1"><rect x="10" y="25" width="40" height="55" rx="4"/><rect x="22" y="10" width="16" height="15" rx="2"/><line x1="30" y1="2" x2="30" y2="10"/><circle cx="30" cy="2" r="2"/></svg>
+          <span>Product Image</span>
+        </div>
+        <span class="product-badge">Bestseller</span>
+      </div>
+      <div class="product-info">
+        <h3 class="product-name">Noir Velvet</h3>
+        <p class="product-notes">Oud · Black Amber · Vanilla</p>
+        <p class="product-size">Eau de Parfum — 50ml</p>
+        <div class="product-bottom">
+          <span class="product-price">₦45,000</span>
+          <button class="product-btn">Order</button>
+        </div>
+      </div>
+    </div>
+    <!-- Card 2 -->
+    <div class="product-card animate-on-scroll">
+      <div class="product-image">
+        <div class="product-image-inner">
+          <svg viewBox="0 0 60 90" fill="none" stroke="currentColor" stroke-width="1"><rect x="10" y="25" width="40" height="55" rx="4"/><rect x="22" y="10" width="16" height="15" rx="2"/><line x1="30" y1="2" x2="30" y2="10"/><circle cx="30" cy="2" r="2"/></svg>
+          <span>Product Image</span>
+        </div>
+      </div>
+      <div class="product-info">
+        <h3 class="product-name">Lagos Nights</h3>
+        <p class="product-notes">Bergamot · Jasmine · Musk</p>
+        <p class="product-size">Eau de Parfum — 100ml</p>
+        <div class="product-bottom">
+          <span class="product-price">₦72,000</span>
+          <button class="product-btn">Order</button>
+        </div>
+      </div>
+    </div>
+    <!-- Card 3 -->
+    <div class="product-card animate-on-scroll">
+      <div class="product-image">
+        <div class="product-image-inner">
+          <svg viewBox="0 0 60 90" fill="none" stroke="currentColor" stroke-width="1"><rect x="10" y="25" width="40" height="55" rx="4"/><rect x="22" y="10" width="16" height="15" rx="2"/><line x1="30" y1="2" x2="30" y2="10"/><circle cx="30" cy="2" r="2"/></svg>
+          <span>Product Image</span>
+        </div>
+        <span class="product-badge">New</span>
+      </div>
+      <div class="product-info">
+        <h3 class="product-name">Golden Hour</h3>
+        <p class="product-notes">Saffron · Rose · Sandalwood</p>
+        <p class="product-size">Eau de Parfum — 50ml</p>
+        <div class="product-bottom">
+          <span class="product-price">₦55,000</span>
+          <button class="product-btn">Order</button>
+        </div>
+      </div>
+    </div>
+    <!-- Card 4 -->
+    <div class="product-card animate-on-scroll">
+      <div class="product-image">
+        <div class="product-image-inner">
+          <svg viewBox="0 0 60 90" fill="none" stroke="currentColor" stroke-width="1"><rect x="10" y="25" width="40" height="55" rx="4"/><rect x="22" y="10" width="16" height="15" rx="2"/><line x1="30" y1="2" x2="30" y2="10"/><circle cx="30" cy="2" r="2"/></svg>
+          <span>Product Image</span>
+        </div>
+      </div>
+      <div class="product-info">
+        <h3 class="product-name">Île de Beauté</h3>
+        <p class="product-notes">Neroli · Fig · White Cedar</p>
+        <p class="product-size">Eau de Parfum — 100ml</p>
+        <div class="product-bottom">
+          <span class="product-price">₦68,000</span>
+          <button class="product-btn">Order</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== ABOUT ===== -->
+<div class="divider"></div>
+<section class="section" id="about">
+  <div class="animate-on-scroll">
+    <p class="section-label">Our Story</p>
+    <h2 class="section-title">The Art of <em>Biba</em></h2>
+    <div class="section-line"></div>
+  </div>
+  <div class="about-grid">
+    <div class="about-visual animate-on-scroll">
+      <svg viewBox="0 0 200 240" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M100 20 C100 20 108 32 108 40 C108 44 104 48 100 48 C96 48 92 44 92 40 C92 32 100 20 100 20Z" fill="#C9A96E" opacity="0.3"/>
+        <path d="M100 48 L160 110 L100 172 L40 110 Z" stroke="#C9A96E" stroke-width="1" fill="none" opacity="0.3"/>
+        <path d="M100 68 L140 110 L100 152 L60 110 Z" stroke="#C9A96E" stroke-width="0.5" fill="none" opacity="0.2"/>
+        <path d="M40 110 C40 110 30 150 60 185 C80 205 100 210 100 210" stroke="#C9A96E" stroke-width="1" fill="none" opacity="0.2"/>
+        <path d="M160 110 C160 110 170 150 140 185 C120 205 100 210 100 210" stroke="#C9A96E" stroke-width="1" fill="none" opacity="0.2"/>
+        <line x1="85" y1="210" x2="115" y2="210" stroke="#C9A96E" stroke-width="1" opacity="0.3"/>
+      </svg>
+    </div>
+    <div class="about-text animate-on-scroll">
+      <h3>Born in Lagos, crafted for <em>the world.</em></h3>
+      <p>Scents by Biba was founded with a singular vision: to redefine what luxury fragrance means for the modern African woman and man. Every bottle is a carefully composed symphony of the finest ingredients sourced from around the globe.</p>
+      <p>We believe that fragrance is deeply personal — an invisible signature that lingers long after you've left the room. Our perfumes are designed to be bold yet intimate, memorable yet uniquely yours.</p>
+      <div class="about-stats">
+        <div>
+          <div class="about-stat-num">50+</div>
+          <div class="about-stat-label">Fragrances Crafted</div>
+        </div>
+        <div>
+          <div class="about-stat-num">10K+</div>
+          <div class="about-stat-label">Happy Clients</div>
+        </div>
+        <div>
+          <div class="about-stat-num">100%</div>
+          <div class="about-stat-label">Authentic Oils</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== FRAGRANCE GUIDE ===== -->
+<div class="divider"></div>
+<section class="section" id="guide">
+  <div class="animate-on-scroll">
+    <p class="section-label">Fragrance Education</p>
+    <h2 class="section-title">How to Wear <em>Your Scent</em></h2>
+    <div class="section-line"></div>
+    <p class="section-desc">Master the art of fragrance application to make every spray count. These tips will help your perfume last longer and project beautifully.</p>
+  </div>
+  <div class="guide-wrapper">
+    <!-- Guide 1 -->
+    <div class="guide-card animate-on-scroll" onclick="toggleGuide(this)">
+      <span class="guide-card-num">01</span>
+      <div class="guide-card-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><circle cx="12" cy="8" r="4"/><path d="M8 14s-4 2-4 6h16c0-4-4-6-4-6"/></svg>
+      </div>
+      <h4>Know Your Pulse Points</h4>
+      <p>Apply perfume where your blood vessels are closest to the skin for maximum warmth and projection.</p>
+      <div class="guide-expand">
+        The best pulse points are: the inner wrists, behind the ears, the base of the throat, inside the elbows, and behind the knees. These warm areas help diffuse the fragrance naturally throughout the day. Avoid rubbing your wrists together — this crushes the top notes and changes how the scent develops.
+      </div>
+      <div class="guide-card-toggle">
+        <span>Read more</span>
+        <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M2 4l4 4 4-4"/></svg>
+      </div>
+    </div>
+    <!-- Guide 2 -->
+    <div class="guide-card animate-on-scroll" onclick="toggleGuide(this)">
+      <span class="guide-card-num">02</span>
+      <div class="guide-card-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M12 3v18M5 8l7-5 7 5M5 16l7 5 7-5"/></svg>
+      </div>
+      <h4>Layer Your Fragrances</h4>
+      <p>Combine complementary scents to create a fragrance profile that is uniquely and distinctively yours.</p>
+      <div class="guide-expand">
+        Start with a scented body wash or lotion as your base layer, then apply your perfume on top. For advanced layering, combine two fragrances: apply a heavier, richer scent first (like oud or vanilla), then finish with a lighter note (like citrus or floral). This creates depth and complexity that a single perfume alone cannot achieve.
+      </div>
+      <div class="guide-card-toggle">
+        <span>Read more</span>
+        <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M2 4l4 4 4-4"/></svg>
+      </div>
+    </div>
+    <!-- Guide 3 -->
+    <div class="guide-card animate-on-scroll" onclick="toggleGuide(this)">
+      <span class="guide-card-num">03</span>
+      <div class="guide-card-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><rect x="4" y="4" width="16" height="16" rx="2"/><path d="M12 8v8M8 12h8"/></svg>
+      </div>
+      <h4>Store Correctly</h4>
+      <p>How you store your perfume directly impacts how long it retains its original character and quality.</p>
+      <div class="guide-expand">
+        Keep your perfumes in a cool, dark place away from direct sunlight and humidity — your bathroom is actually the worst place. A bedroom drawer or closet shelf is ideal. Always keep the cap on to prevent oxidation. Stored correctly, a quality fragrance can last 3–5 years without losing its potency or character.
+      </div>
+      <div class="guide-card-toggle">
+        <span>Read more</span>
+        <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M2 4l4 4 4-4"/></svg>
+      </div>
+    </div>
+    <!-- Guide 4 -->
+    <div class="guide-card animate-on-scroll" onclick="toggleGuide(this)">
+      <span class="guide-card-num">04</span>
+      <div class="guide-card-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+      </div>
+      <h4>Timing is Everything</h4>
+      <p>Apply your fragrance right after a shower for the longest-lasting scent experience possible.</p>
+      <div class="guide-expand">
+        Moisturized skin holds fragrance much longer than dry skin. After showering, apply an unscented moisturizer or body oil, then spray your perfume while your skin is still slightly damp. The moisture helps lock in the scent molecules. In Lagos's warm climate, opt for 2–3 sprays rather than drenching — heat amplifies fragrance naturally.
+      </div>
+      <div class="guide-card-toggle">
+        <span>Read more</span>
+        <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M2 4l4 4 4-4"/></svg>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== JOURNAL ===== -->
+<div class="divider"></div>
+<section class="section" id="journal">
+  <div class="animate-on-scroll">
+    <p class="section-label">The Journal</p>
+    <h2 class="section-title">Stories & <em>Inspiration</em></h2>
+    <div class="section-line"></div>
+    <p class="section-desc">Insights into the world of fragrance — from behind-the-scenes stories to expert guides on scent selection and style.</p>
+  </div>
+  <div class="journal-grid">
+    <!-- Post 1 -->
+    <div class="journal-card animate-on-scroll">
+      <div class="journal-img">
+        <span>Cover Image</span>
+        <span class="journal-category">Fragrance Education</span>
+      </div>
+      <div class="journal-body">
+        <p class="journal-date">March 8, 2026</p>
+        <h3 class="journal-title">Understanding Scent Families: A Beginner's Guide</h3>
+        <p class="journal-excerpt">From floral to oriental, woody to fresh — learn how to navigate the world of fragrance families and discover which one resonates with your personality.</p>
+        <a href="#" class="journal-link">Read Article <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M2 6h8M7 3l3 3-3 3"/></svg></a>
+      </div>
+    </div>
+    <!-- Post 2 -->
+    <div class="journal-card animate-on-scroll">
+      <div class="journal-img">
+        <span>Cover Image</span>
+        <span class="journal-category">Behind the Scent</span>
+      </div>
+      <div class="journal-body">
+        <p class="journal-date">February 22, 2026</p>
+        <h3 class="journal-title">The Journey of Oud: From Ancient Arabia to Modern Lagos</h3>
+        <p class="journal-excerpt">Discover the rich history of oud — one of the most prized ingredients in perfumery — and why it has become a cornerstone of luxury Nigerian fragrance.</p>
+        <a href="#" class="journal-link">Read Article <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M2 6h8M7 3l3 3-3 3"/></svg></a>
+      </div>
+    </div>
+    <!-- Post 3 -->
+    <div class="journal-card animate-on-scroll">
+      <div class="journal-img">
+        <span>Cover Image</span>
+        <span class="journal-category">Style</span>
+      </div>
+      <div class="journal-body">
+        <p class="journal-date">February 10, 2026</p>
+        <h3 class="journal-title">Day to Night: Choosing the Right Fragrance for Every Occasion</h3>
+        <p class="journal-excerpt">Your morning meeting and your Friday night out call for very different scents. Here's how to build a versatile fragrance wardrobe that works around the clock.</p>
+        <a href="#" class="journal-link">Read Article <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M2 6h8M7 3l3 3-3 3"/></svg></a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== INSTAGRAM ===== -->
+<div class="divider"></div>
+<section class="insta-section" id="connect">
+  <div class="animate-on-scroll">
+    <p class="section-label">Follow the Journey</p>
+    <h2 class="section-title">@scentsbybiba_</h2>
+    <div class="section-line"></div>
+  </div>
+  <div class="insta-grid animate-on-scroll">
+    <div class="insta-cell"><div class="insta-cell-inner">IG Post</div></div>
+    <div class="insta-cell"><div class="insta-cell-inner">IG Post</div></div>
+    <div class="insta-cell"><div class="insta-cell-inner">IG Post</div></div>
+    <div class="insta-cell"><div class="insta-cell-inner">IG Post</div></div>
+    <div class="insta-cell"><div class="insta-cell-inner">IG Post</div></div>
+    <div class="insta-cell"><div class="insta-cell-inner">IG Post</div></div>
+  </div>
+  <a href="https://instagram.com/scentsbybiba_" target="_blank" class="insta-follow">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="5"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>
+    Follow Us
+  </a>
+</section>
+
+<!-- ===== NEWSLETTER ===== -->
+<div class="divider"></div>
+<section class="newsletter">
+  <div class="newsletter-inner animate-on-scroll">
+    <p class="section-label">Stay Connected</p>
+    <h2 class="section-title">Join the <em>Inner Circle</em></h2>
+    <div class="section-line"></div>
+    <p class="section-desc">Be the first to know about new launches, exclusive offers, and fragrance tips delivered straight to your inbox.</p>
+    <div class="newsletter-form">
+      <input type="email" class="newsletter-input" placeholder="Enter your email address">
+      <button class="newsletter-submit">Subscribe</button>
+    </div>
+  </div>
+</section>
+
+<!-- ===== FOOTER ===== -->
+<footer class="footer">
+  <div class="footer-inner">
+    <div>
+      <div class="footer-brand-text">Scents <span>by Biba</span></div>
+      <p class="footer-brand-desc">Luxury Nigerian fragrance house dedicated to creating scents that tell stories, evoke emotions, and leave lasting impressions.</p>
+    </div>
+    <div class="footer-col">
+      <h5>Navigate</h5>
+      <a href="#collection">Collection</a>
+      <a href="#about">About Us</a>
+      <a href="#guide">Fragrance Guide</a>
+      <a href="#journal">Journal</a>
+    </div>
+    <div class="footer-col">
+      <h5>Support</h5>
+      <a href="#">Shipping & Delivery</a>
+      <a href="#">Returns Policy</a>
+      <a href="#">FAQs</a>
+      <a href="#">Contact Us</a>
+    </div>
+    <div class="footer-col">
+      <h5>Contact</h5>
+      <a href="mailto:hello@scentsbybiba.com">hello@scentsbybiba.com</a>
+      <a href="#">Lagos, Nigeria</a>
+      <a href="https://instagram.com/scentsbybiba_" target="_blank">@scentsbybiba_</a>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p class="footer-copy">&copy; 2026 Scents by Biba. All rights reserved.</p>
+    <div class="footer-socials">
+      <a href="https://instagram.com/scentsbybiba_" target="_blank">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="5"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>
+      </a>
+      <a href="#">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M23 3a10.9 10.9 0 01-3.14 1.53A4.48 4.48 0 0012 7.5v1A10.66 10.66 0 013 4s-4 9 5 13a11.64 11.64 0 01-7 2c9 5 20 0 20-11.5a4.5 4.5 0 00-.08-.83A7.72 7.72 0 0023 3z"/></svg>
+      </a>
+      <a href="#">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z"/></svg>
+      </a>
+    </div>
+  </div>
+</footer>
+
+<!-- ===== WHATSAPP FLOAT ===== -->
+<a href="https://wa.me/2348000000000?text=Hello%20Scents%20by%20Biba!%20I'm%20interested%20in%20your%20fragrances." target="_blank" class="whatsapp-float" title="Order via WhatsApp">
+  <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+</a>
+
+<!-- ===== SCRIPTS ===== -->
+<script>
+// Nav scroll effect
+const nav = document.getElementById('nav');
+window.addEventListener('scroll', () => {
+  nav.classList.toggle('scrolled', window.scrollY > 60);
+});
+
+// Mobile menu
+function toggleMenu() {
+  document.getElementById('hamburger').classList.toggle('active');
+  document.getElementById('mobileMenu').classList.toggle('active');
+  document.body.style.overflow = document.getElementById('mobileMenu').classList.contains('active') ? 'hidden' : '';
+}
+
+// Scroll animations
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach((entry, i) => {
+    if (entry.isIntersecting) {
+      setTimeout(() => entry.target.classList.add('visible'), i * 100);
+      observer.unobserve(entry.target);
+    }
+  });
+}, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+
+document.querySelectorAll('.animate-on-scroll').forEach(el => observer.observe(el));
+
+// Guide card toggle
+function toggleGuide(card) {
+  const wasOpen = card.classList.contains('open');
+  document.querySelectorAll('.guide-card').forEach(c => c.classList.remove('open'));
+  if (!wasOpen) card.classList.add('open');
+}
+
+// Smooth scroll for anchor links
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+  anchor.addEventListener('click', function(e) {
+    const target = document.querySelector(this.getAttribute('href'));
+    if (target) {
+      e.preventDefault();
+      target.scrollIntoView({ behavior: 'smooth' });
+    }
+  });
+});
+</script>
+
+</body>
+</html>
